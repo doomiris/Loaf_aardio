@@ -1,0 +1,177 @@
+import win.ui;
+/*DSG{{*/
+var winform = win.form(text="摸鱼AARDIO";right=759;bottom=469)
+winform.add(
+button={cls="button";text="摸 鱼";left=517;top=389;right=628;bottom=434;db=1;dr=1;z=2};
+custom={cls="custom";text="自定义控件";left=0;top=0;right=760;bottom=370;ah=1;aw=1;db=1;dl=1;dr=1;dt=1;z=1};
+static={cls="static";text="Alt+F4 退出";left=632;top=407;right=721;bottom=424;align="right";db=1;dr=1;notify=1;transparent=1;z=3}
+)
+/*}}*/
+
+import web.form;
+var wb = web.form( winform.custom, 
+	0x1/*_UIFLAG_DIALOG*/ |
+	0x8/*_UIFLAG_SCROLL_NO*/ |
+	0x40/*_UIFLAG_DISABLE_OFFSCREEN*/ |
+	0x2/*_UIFLAG_DISABLE_HELP_MENU*/);
+
+//使用external接口定义网页脚本可调用的本地函数
+wb.external={
+	close = function(){ winform.close()}
+}
+
+wb.html = /**
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <style type="text/css">
+html {
+	cursor: none;
+	
+}
+body {
+  	background: #111;
+	width: 100%;
+	height: 100%;	
+	overflow-x: hidden;
+}
+.loader {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 50px;
+	height:50px;
+	margin-left:-25px;
+	margin-top:-25px;
+}
+.loader .circle {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  opacity: 0;
+  transform: rotate(225deg);
+  animation-iteration-count: infinite;
+  animation-name: orbit;
+  animation-duration: 5.5s;
+}
+.loader .circle:after {
+  content: '';
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 7px;
+  background: #fff;
+}
+.loader .circle:nth-child(2) {
+  animation-delay: 240ms;
+}
+.loader .circle:nth-child(3) {
+  animation-delay: 480ms;
+}
+.loader .circle:nth-child(4) {
+  animation-delay: 720ms;
+}
+.loader .circle:nth-child(5) {
+  animation-delay: 960ms;
+}
+@keyframes orbit {
+  0% {
+    transform: rotate(225deg);
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+  7% {
+    transform: rotate(345deg);
+    animation-timing-function: linear;
+  }
+  30% {
+    transform: rotate(455deg);
+    animation-timing-function: ease-in-out;
+  }
+  39% {
+    transform: rotate(690deg);
+    animation-timing-function: linear;
+  }
+  70% {
+    transform: rotate(815deg);
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+  75% {
+    transform: rotate(945deg);
+    animation-timing-function: ease-out;
+  }
+  76% {
+    transform: rotate(945deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(945deg);
+    opacity: 0;
+  }
+}
+.caption {
+	position: absolute;
+	left: 0;
+	top: 135px;
+	right:0;
+	bottom:0px;
+	width: 50%;
+	height:50px;
+	margin: auto;
+	text-align: center;
+	color: white;
+	font-family: 微软雅黑;
+	font-size: 1em
+}
+.footer {
+	width: 100%;
+	text-align: center;
+	color: white;
+	position: fixed;
+	bottom: 40px;
+	font-family: 微软雅黑;
+	font-size: 1.5em
+}
+    </style>
+</head>
+<body>
+
+<div class='loader'>
+  <div class='circle'></div>
+  <div class='circle'></div>
+  <div class='circle'></div>
+  <div class='circle'></div>
+  <div class='circle'></div>
+</div>
+
+<div class='caption'>
+正在进行更新 2% <br/>
+请保持计算机打开状态.</div>
+
+<div class='footer'>计算机可能会重启几次</div>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>
+**/
+
+
+winform.button.oncommand = function(id,event){
+	winform.custom.fullscreen();
+}
+
+winform.custom.onClose = function(hwnd,message,wParam,lParam){
+    winform.close();
+}
+
+
+
+winform.show(); //显示窗体
+
+winform.show();
+win.loopMessage();
+return winform;

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project ver="10" name="摸鱼aardio" libEmbed="true" icon="..." ui="win" output="摸鱼aardio.exe" CompanyName="aardio" FileDescription="摸鱼aardio" LegalCopyright="Copyright (C) doomiris 2021" ProductName="摸鱼aardio" InternalName="摸鱼aardio" FileVersion="0.0.0.04" ProductVersion="0.0.0.04" publishDir="/dist/" dstrip="false" local="false" ignored="false">
+	<file name="main" path="main.aardio"/>
+	<folder name="窗体" path="forms" comment="" embed="true" local="false" ignored="false"/>
+	<folder name="网页" path="web" embed="true" comment="目录" local="true" ignored="false"/>
+	<folder name="网页源码" path="web.src" embed="false" comment="目录" local="false" ignored="true"/>
+	<folder name="res" path="res" comment="res" local="false" embed="false" ignored="false"/>
+</project>
