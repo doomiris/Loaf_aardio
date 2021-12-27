@@ -4,7 +4,9 @@ var winform = win.form(text="摸鱼AARDIO";right=759;bottom=469)
 winform.add(
 button={cls="button";text="摸 鱼";left=517;top=389;right=628;bottom=434;db=1;dr=1;z=2};
 custom={cls="custom";text="自定义控件";left=0;top=0;right=760;bottom=370;ah=1;aw=1;db=1;dl=1;dr=1;dt=1;z=1};
-static={cls="static";text="Alt+F4 退出";left=632;top=407;right=721;bottom=424;align="right";db=1;dr=1;notify=1;transparent=1;z=3}
+edit={cls="edit";text="5";left=62;top=387;right=102;bottom=409;edge=1;multiline=1;z=4};
+static={cls="static";text="Alt+F4 退出";left=632;top=407;right=721;bottom=424;align="right";db=1;dr=1;notify=1;transparent=1;z=3};
+static2={cls="static";text="分钟";left=110;top=390;right=150;bottom=405;transparent=1;z=5}
 )
 /*}}*/
 
@@ -17,7 +19,8 @@ var wb = web.form( winform.custom,
 
 //使用external接口定义网页脚本可调用的本地函数
 wb.external={
-	close = function(){ winform.close()}
+	close = function(){ winform.close()};
+	total_seconds = winform.edit.text * 60;
 }
 
 wb.html = /**
@@ -148,12 +151,20 @@ body {
 </div>
 
 <div class='caption'>
-正在进行更新 2% <br/>
+正在进行更新 <step>2</step>% <br/>
 请保持计算机打开状态.</div>
 
 <div class='footer'>计算机可能会重启几次</div>
 <script type="text/javascript">
-
+var ele = document.getElementsByTagName('step')[0];
+var refresh = function(){
+	ele.innerText = parseInt(ele.innerText) + 1;
+	if (parseInt(ele.innerText) == 100){
+		clearInterval(inv);
+		external.close();
+	}
+}
+var inv = setInterval(refresh, 1000 * external.total_seconds / 100);
 </script>
 </body>
 </html>
@@ -162,6 +173,8 @@ body {
 
 winform.button.oncommand = function(id,event){
 	winform.custom.fullscreen();
+	wb.external.total_seconds = winform.edit.text * 60;
+	wb.queryEles(tagName="step")[1].innerText = 0;
 }
 
 winform.custom.onClose = function(hwnd,message,wParam,lParam){
