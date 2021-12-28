@@ -1,12 +1,13 @@
+import fonts.materialDesignIcons;
 import win.ui;
 /*DSG{{*/
-var winform = win.form(text="摸鱼AARDIO";right=759;bottom=469)
+var winform = win.form(text="摸鱼 AARDIO";right=759;bottom=469)
 winform.add(
-button={cls="button";text="摸 鱼";left=517;top=389;right=628;bottom=434;db=1;dr=1;z=2};
+button={cls="button";text='\uF23A  摸 鱼';left=39;top=417;right=122;bottom=448;color=8421376;db=1;default=1;dl=1;dr=1;font=LOGFONT(h=-16;name='Material Design Icons');tabstop=1;z=2};
 custom={cls="custom";text="自定义控件";left=0;top=0;right=760;bottom=370;ah=1;aw=1;db=1;dl=1;dr=1;dt=1;z=1};
-edit={cls="edit";text="5";left=62;top=387;right=102;bottom=409;edge=1;multiline=1;z=4};
-static={cls="static";text="Alt+F4 退出";left=632;top=407;right=721;bottom=424;align="right";db=1;dr=1;notify=1;transparent=1;z=3};
-static2={cls="static";text="分钟";left=110;top=390;right=150;bottom=405;transparent=1;z=5}
+custom2={cls="syslink";text='\uF2A4';left=705;top=417;right=755;bottom=467;db=1;dr=1;font=LOGFONT(h=-33;name='Material Design Icons');z=5};
+edit={cls="edit";text="5";left=164;top=422;right=204;bottom=444;db=1;dl=1;edge=1;multiline=1;num=1;tabstop=1;z=3};
+static2={cls="static";text="分钟后自动退出, 按Alt+F4提前退出";left=212;top=425;right=452;bottom=440;db=1;dl=1;transparent=1;z=4}
 )
 /*}}*/
 
@@ -15,174 +16,43 @@ var wb = web.form( winform.custom,
 	0x1/*_UIFLAG_DIALOG*/ |
 	0x8/*_UIFLAG_SCROLL_NO*/ |
 	0x40/*_UIFLAG_DISABLE_OFFSCREEN*/ |
-	0x2/*_UIFLAG_DISABLE_HELP_MENU*/);
+	0x2/*_UIFLAG_DISABLE_HELP_MENU*/
+);
 
-//使用external接口定义网页脚本可调用的本地函数
 wb.external={
 	close = function(){ winform.close()};
 	total_seconds = winform.edit.text * 60;
 }
 
-wb.html = /**
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <style type="text/css">
-html {
-	cursor: none;
-	
-}
-body {
-  	background: #111;
-	width: 100%;
-	height: 100%;	
-	overflow-x: hidden;
-}
-.loader {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	width: 50px;
-	height:50px;
-	margin-left:-25px;
-	margin-top:-25px;
-}
-.loader .circle {
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  opacity: 0;
-  transform: rotate(225deg);
-  animation-iteration-count: infinite;
-  animation-name: orbit;
-  animation-duration: 5.5s;
-}
-.loader .circle:after {
-  content: '';
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  border-radius: 7px;
-  background: #fff;
-}
-.loader .circle:nth-child(2) {
-  animation-delay: 240ms;
-}
-.loader .circle:nth-child(3) {
-  animation-delay: 480ms;
-}
-.loader .circle:nth-child(4) {
-  animation-delay: 720ms;
-}
-.loader .circle:nth-child(5) {
-  animation-delay: 960ms;
-}
-@keyframes orbit {
-  0% {
-    transform: rotate(225deg);
-    opacity: 1;
-    animation-timing-function: ease-out;
-  }
-  7% {
-    transform: rotate(345deg);
-    animation-timing-function: linear;
-  }
-  30% {
-    transform: rotate(455deg);
-    animation-timing-function: ease-in-out;
-  }
-  39% {
-    transform: rotate(690deg);
-    animation-timing-function: linear;
-  }
-  70% {
-    transform: rotate(815deg);
-    opacity: 1;
-    animation-timing-function: ease-out;
-  }
-  75% {
-    transform: rotate(945deg);
-    animation-timing-function: ease-out;
-  }
-  76% {
-    transform: rotate(945deg);
-    opacity: 0;
-  }
-  100% {
-    transform: rotate(945deg);
-    opacity: 0;
-  }
-}
-.caption {
-	position: absolute;
-	left: 0;
-	top: 135px;
-	right:0;
-	bottom:0px;
-	width: 50%;
-	height:50px;
-	margin: auto;
-	text-align: center;
-	color: white;
-	font-family: 微软雅黑;
-	font-size: 1em
-}
-.footer {
-	width: 100%;
-	text-align: center;
-	color: white;
-	position: fixed;
-	bottom: 40px;
-	font-family: 微软雅黑;
-	font-size: 1.5em
-}
-    </style>
-</head>
-<body>
-
-<div class='loader'>
-  <div class='circle'></div>
-  <div class='circle'></div>
-  <div class='circle'></div>
-  <div class='circle'></div>
-  <div class='circle'></div>
-</div>
-
-<div class='caption'>
-正在进行更新 <step>2</step>% <br/>
-请保持计算机打开状态.</div>
-
-<div class='footer'>计算机可能会重启几次</div>
-<script type="text/javascript">
-var ele = document.getElementsByTagName('step')[0];
-var refresh = function(){
-	ele.innerText = parseInt(ele.innerText) + 1;
-	if (parseInt(ele.innerText) == 100){
-		clearInterval(inv);
-		external.close();
-	}
-}
-var inv = setInterval(refresh, 1000 * external.total_seconds / 100);
-</script>
-</body>
-</html>
-**/
+wb.go("\web\index.html");
 
 
 winform.button.oncommand = function(id,event){
-	winform.custom.fullscreen();
+	if !#winform.edit.text return ; 	
+	
+	wb.queryEles(tagName="step").innerText = 0;
+	wb.queryEles(tagName="html").style.cursor="none";
+
 	wb.external.total_seconds = winform.edit.text * 60;
-	wb.queryEles(tagName="step")[1].innerText = 0;
+	var js = /**
+		clearInterval(inv);
+		setInterval(refresh, 1000 * external.total_seconds / 100);
+	**/
+	wb.doScript(js);	
+	
+	winform.custom.fullscreen();
+	
+	winform.show(false);
 }
 
 winform.custom.onClose = function(hwnd,message,wParam,lParam){
     winform.close();
 }
-
-
-
+import process; 
+winform.custom2.text = `<a href="https://github.com/doomiris/Loaf_aardio">` + '\uF2A4' + `</a>`;
+winform.custom2.onHyperlinkClick = function(nmSysLink,url,id){
+	process.openUrl(url) //打开超链接	
+}
 winform.show(); //显示窗体
 
 winform.show();
